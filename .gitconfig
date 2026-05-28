@@ -1,0 +1,31 @@
+[user]
+	email = "alubukad@gmail.com"
+	username = "alubukad"
+
+[core]
+	editor = nvim
+
+[gui]
+	editor = nvim
+
+[color]
+	ui = auto
+
+[color "branch"]
+	current = blue bold
+	local = cyan bold
+	remote = green bold
+
+[color "status"]
+	added = green bold
+	changed = yellow bold
+	untracked = red bold
+
+[init]
+	defaultBranch = main
+
+[alias]
+	# Show all branches
+	allBranches = !git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:short)%(color:reset))'
+	branchName = !git branch | grep "^*" | awk '{ print $2 }'
+	co = commit

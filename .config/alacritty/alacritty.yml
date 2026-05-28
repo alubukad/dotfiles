@@ -1,0 +1,21 @@
+env:
+  TERM: xterm-256color
+
+window:
+  dimensions:
+    columns: 155
+    lines: 40
+  decorations: full
+  opacity: 1.0
+  dynamic_title: true
+
+scrolling:
+  history: 10000
+
+font:
+  normal:
+    family: 'Ubuntu Mono Nerd Font'
+  size: 11.0
+
+key_bindings:
+  - { key: Escape, mods: Control|Shift, action: ToggleViMode }
