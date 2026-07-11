@@ -1,0 +1,174 @@
+/*
+ * Solid — a notification theme for xfce4-notifyd
+ * macOS-inspired: a compact frosted card with a semibold title, muted
+ * body text, and flat minimal buttons — echoing Notification Center.
+ *
+ * PALETTE
+ * -------
+ * Fixed dark theme: a near-black card (#1c1c1e) with white/grey text. GTK3
+ * notification CSS can't auto-switch with the system light/dark preference,
+ * so colours are hard-coded rather than derived from the active GTK theme.
+ * To flip to a light card instead, see "SWITCH TO LIGHT" at the bottom.
+ *
+ * INSTALL
+ * -------
+ *   Copy the whole "Solid" folder to ~/.themes/  (so this file ends up at
+ *   ~/.themes/Solid/xfce-notify-4.0/gtk.css), then pick "Solid" in
+ *   Settings → Notifications → Appearance (or run `xfce4-notifyd-config`).
+ *   A running compositor is required for rounded corners + shadow.
+ *
+ * NOTE ON SELECTORS
+ * -----------------
+ * Widget name #XfceNotifyWindow is stable across xfce4-notifyd versions.
+ * The inner class names (.summary, .body, progressbar, .close-button) have
+ * been consistent for a long time, but if a detail doesn't take on your
+ * version, that's the first place to adjust.
+ */
+
+/* ---- Semantic palette, fixed dark (black + white) ------------------------ */
+@define-color solid_fg            #ffffff;                    /* primary text  */
+@define-color solid_muted         #a8a8ad;                    /* secondary text */
+@define-color solid_card          #1c1c1e;                    /* card surface  */
+@define-color solid_border        rgba(255, 255, 255, 0.08);  /* hairline edge */
+@define-color solid_fill          rgba(255, 255, 255, 0.06);  /* button / track */
+@define-color solid_fill_hover    rgba(255, 255, 255, 0.10);
+@define-color solid_fill_active   rgba(255, 255, 255, 0.16);
+@define-color solid_accent        #0a84ff;                    /* progress / focus / links */
+
+/* ---- The floating card -------------------------------------------------- */
+#XfceNotifyWindow {
+    background-color: @solid_card;
+    color: @solid_fg;
+
+    /* macOS-style large corner radius */
+    border-radius: 18px;
+    border: 1px solid @solid_border;
+
+    /* soft, wide, low-contrast shadow, like a Notification Center banner */
+    box-shadow: 0 1px 1px alpha(black, 0.06),
+                0 12px 32px alpha(black, 0.18);
+
+    /* leaves room so the shadow isn't clipped by the window edge */
+    margin: 10px;
+    padding: 14px 16px;
+    min-width: 320px;
+
+    font-family: -apple-system, "SF Pro Text", "Inter", "Helvetica Neue", "Cantarell", sans-serif;
+    /* No explicit font-size here: inherit the system's default font size
+       (Settings → Appearance → Fonts, or the DPI/scaling factor) rather
+       than hard-coding a point size that ignores it. */
+}
+
+/* xfce4-notifyd dims the whole window while the pointer hovers it;
+   keep that feel gentle rather than harsh */
+#XfceNotifyWindow:hover {
+    opacity: 0.96;
+}
+
+/* ---- Text --------------------------------------------------------------- */
+#XfceNotifyWindow .summary {
+    font-weight: 600;
+    font-size: 1.05em; /* relative to the inherited system font size */
+    color: @solid_fg;
+    margin-bottom: 1px;
+}
+
+#XfceNotifyWindow .body {
+    font-weight: 400;
+    color: @solid_muted;
+}
+
+#XfceNotifyWindow .body a {
+    color: @solid_accent;
+    text-decoration: none;
+}
+
+/* ---- App icon ------------------------------------------------------------ */
+#XfceNotifyWindow image {
+    margin-right: 12px;
+    border-radius: 8px; /* rounded-square "app icon" look, mac-squircle-ish */
+}
+
+/* ---- Action buttons ------------------------------------------------------- */
+/* flat, text-forward buttons with an accent tint, closer to Notification
+   Center's minimal action rows than a filled elementary-style pill */
+#XfceNotifyWindow button {
+    background-image: none;
+    background-color: @solid_fill;
+    color: @solid_fg;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    margin-top: 10px;
+    box-shadow: none;
+    transition: background-color 150ms ease, box-shadow 150ms ease;
+}
+
+#XfceNotifyWindow button:hover {
+    background-color: @solid_fill_hover;
+}
+
+#XfceNotifyWindow button:active {
+    background-color: @solid_fill_active;
+}
+
+#XfceNotifyWindow button:focus {
+    box-shadow: 0 0 0 2px alpha(@solid_accent, 0.45);
+}
+
+/* ---- Close (×) button ------------------------------------------------------ */
+/* mac hides this until you hover the banner; we keep it always present
+   (xfce4-notifyd doesn't expose a hover-reveal hook) but as subtle as
+   possible so it doesn't compete with the content */
+#XfceNotifyWindow .close-button {
+    background-color: transparent;
+    color: @solid_muted;
+    border: none;
+    border-radius: 999px;
+    padding: 3px;
+    margin: 0;
+    min-width: 20px;
+    min-height: 20px;
+    box-shadow: none;
+}
+
+#XfceNotifyWindow .close-button:hover {
+    background-color: @solid_fill_hover;
+    color: @solid_fg;
+}
+
+/* ---- Progress bar (volume / brightness / download popups) ----------------- */
+#XfceNotifyWindow progressbar {
+    margin-top: 10px;
+}
+
+#XfceNotifyWindow progressbar trough {
+    background-color: @solid_fill;
+    border: none;
+    border-radius: 999px;
+    min-height: 5px;
+}
+
+#XfceNotifyWindow progressbar progress {
+    background-color: @solid_accent;
+    border: none;
+    border-radius: 999px;
+    min-height: 5px;
+}
+
+/*
+ * ---- SWITCH TO LIGHT (optional) -------------------------------------------
+ * The palette above is fixed dark (black + white). GTK3 notification themes
+ * can't auto-switch between light/dark within one file, so to go light
+ * instead, replace the @define-color block near the top with:
+ *
+ *   @define-color solid_fg            #1d1d1f;
+ *   @define-color solid_muted         #6e6e73;
+ *   @define-color solid_card          #fafafa;
+ *   @define-color solid_border        rgba(0, 0, 0, 0.06);
+ *   @define-color solid_fill          rgba(0, 0, 0, 0.045);
+ *   @define-color solid_fill_hover    rgba(0, 0, 0, 0.08);
+ *   @define-color solid_fill_active   rgba(0, 0, 0, 0.12);
+ *   @define-color solid_accent        #007aff;
+ */
