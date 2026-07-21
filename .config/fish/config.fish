@@ -20,6 +20,8 @@ if status is-interactive
 
     #Add Abbreviations
     abbr gs git status
+    abbr glog git shortlog -e
+    abbr glastchanges git log --no-merges --raw --since='2 weeks ago'
     abbr gco git commit
     abbr gaa git add .
     abbr el exa -lah
@@ -27,7 +29,7 @@ if status is-interactive
     abbr gp git push
     abbr t tmux attach
     abbr tm-ls tmux ls
-    abbr bt Budget_Tracker
+    abbr gprev git checkout -
 
     # CMake abbrs
     abbr cmake-debug 'cmake -DCMAKE_BUILD_TYPE=Debug ../.. && cmake --build .'
@@ -35,10 +37,7 @@ if status is-interactive
 
     # Add aliases for common ops.
     alias dotfiles='cd ~/.dotfiles'
-    alias dev-rust='cd ~/dev/project/rust'
-    alias dev-java='cd ~/dev/project/java'
-    alias dev-elixir='cd ~/dev/project/elixir'
-    alias dev-c='cd ~/dev/project/cc++'
+    alias prj='cd ~/dev/Projects'
 
     # OPAM config
     test -r '/home/cem/.opam/opam-init/init.fish' && source '/home/cem/.opam/opam-init/init.fish' > /dev/null 2> /dev/null; or true
