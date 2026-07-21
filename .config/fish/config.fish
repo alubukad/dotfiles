@@ -21,7 +21,6 @@ if status is-interactive
     #Add Abbreviations
     abbr gs git status
     abbr glog git shortlog -e
-    abbr glastchanges git log --no-merges --raw --since='2 weeks ago'
     abbr gco git commit
     abbr gaa git add .
     abbr el exa -lah
@@ -37,7 +36,8 @@ if status is-interactive
 
     # Add aliases for common ops.
     alias dotfiles='cd ~/.dotfiles'
-    alias prj='cd ~/dev/Projects'
+    alias prj='cd ~/Projects'
+    alias glastchanges="git log --no-merges --raw --since='2 weeks ago'"
 
     # OPAM config
     test -r '/home/cem/.opam/opam-init/init.fish' && source '/home/cem/.opam/opam-init/init.fish' > /dev/null 2> /dev/null; or true
