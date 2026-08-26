@@ -50,13 +50,19 @@ local plugin_nvim_dap = 'mfussenegger/nvim-dap'
 local plugin_nvim_dap_ui = 'rcarriga/nvim-dap-ui'
 
 local plugin_colorscheme = {
-    "ellisonleao/gruvbox.nvim",
+    "tiagovla/tokyodark.nvim",
     config = true,
     opts = {
-        italic = {
-            strings = false,
+        transparent_background = false,
+        gamma = 1.15,
+        styles = {
+            comments = {},
+            keywords = {},
+            identifiers = {},
+            functions = {},
+            variables = {},
         },
-        contrast = "hard"
+        terminal_colors = true,
     },
     priority = 1000
 }
@@ -145,9 +151,6 @@ require('mini.snippets').setup({})
 require('mini.completion').setup({})
 
 -- Setting up colorscheme
-vim.cmd.colorscheme("gruvbox")
+vim.cmd.colorscheme("tokyodark")
 vim.cmd.set("number relativenumber")
-
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
