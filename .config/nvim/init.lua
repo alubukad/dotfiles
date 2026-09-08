@@ -50,34 +50,14 @@ local plugin_nvim_dap = 'mfussenegger/nvim-dap'
 local plugin_nvim_dap_ui = 'rcarriga/nvim-dap-ui'
 
 local plugin_colorscheme = {
-    "rebelot/kanagawa.nvim",
+    "github-main-user/lytmode.nvim",
     config = true,
     opts = {
-        theme = "wave",
-        background = { dark = "wave" },
-        -- kanagawa deep-merges these over its defaults, so an empty table
-        -- would leave the default italic/bold in place: be explicit.
-        commentStyle = { italic = false },
-        keywordStyle = { italic = false },
-        statementStyle = { bold = false },
-        functionStyle = { italic = false, bold = false },
-        typeStyle = { italic = false, bold = false },
-        variablebuiltinStyle = { italic = false },
         transparent = false,
-        dimInactive = false,
-        terminalColors = true,
-        colors = {
-            palette = {
-                fujiWhite = "#EDE8D4", -- main fg, brighter
-                fujiGray  = "#9E9B8B", -- comments: 3.3:1 -> 6.4:1
-                sumiInk6  = "#7A7A99", -- line numbers: 2.2:1 -> 4.4:1
-            },
-            theme = {
-                wave = {
-                    ui = { bg = "#16161D" }, -- darker ground, more separation
-                },
-            },
-        },
+        italic_comments = false,
+        italic_inlayhints = false,
+        underline_links = false,
+        terminal_colors = true,
     },
     priority = 1000
 }
@@ -166,6 +146,6 @@ require('mini.snippets').setup({})
 require('mini.completion').setup({})
 
 -- Setting up colorscheme
-vim.cmd.colorscheme("kanagawa")
+vim.cmd.colorscheme("lytmode")
 vim.cmd.set("number relativenumber")
 
