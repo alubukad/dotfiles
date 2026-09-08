@@ -50,14 +50,26 @@ local plugin_nvim_dap = 'mfussenegger/nvim-dap'
 local plugin_nvim_dap_ui = 'rcarriga/nvim-dap-ui'
 
 local plugin_colorscheme = {
-    "github-main-user/lytmode.nvim",
+    "EdenEast/nightfox.nvim",
     config = true,
     opts = {
-        transparent = false,
-        italic_comments = false,
-        italic_inlayhints = false,
-        underline_links = false,
-        terminal_colors = true,
+        options = {
+            transparent = false,
+            terminal_colors = true,
+            styles = {
+                comments = "NONE",
+                conditionals = "NONE",
+                constants = "NONE",
+                functions = "NONE",
+                keywords = "NONE",
+                numbers = "NONE",
+                operators = "NONE",
+                preprocs = "NONE",
+                strings = "NONE",
+                types = "NONE",
+                variables = "NONE",
+            },
+        },
     },
     priority = 1000
 }
@@ -146,6 +158,23 @@ require('mini.snippets').setup({})
 require('mini.completion').setup({})
 
 -- Setting up colorscheme
-vim.cmd.colorscheme("lytmode")
+-- Themes hardcode italics on groups their `styles` config cannot reach
+-- (nightfox: @markup.raw, @tag.attribute, NeoTreeGitConflict, MiniStarterFooter),
+-- so strip the attribute from every group after the colorscheme loads
+vim.api.nvim_create_autocmd("ColorScheme", {
+    group = vim.api.nvim_create_augroup("NoItalics", { clear = true }),
+    callback = function()
+        for name, def in pairs(vim.api.nvim_get_hl(0, {})) do
+            local cterm_italic = def.cterm and def.cterm.italic
+            if (def.italic or cterm_italic) and not def.link then
+                def.italic = nil
+                if cterm_italic then def.cterm.italic = nil end
+                vim.api.nvim_set_hl(0, name, def)
+            end
+        end
+    end,
+})
+
+vim.cmd.colorscheme("carbonfox")
 vim.cmd.set("number relativenumber")
 
