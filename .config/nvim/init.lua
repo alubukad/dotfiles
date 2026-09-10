@@ -50,28 +50,42 @@ local plugin_nvim_dap = 'mfussenegger/nvim-dap'
 local plugin_nvim_dap_ui = 'rcarriga/nvim-dap-ui'
 
 local plugin_colorscheme = {
-    "EdenEast/nightfox.nvim",
-    config = true,
-    opts = {
-        options = {
-            transparent = false,
-            terminal_colors = true,
-            styles = {
-                comments = "NONE",
-                conditionals = "NONE",
-                constants = "NONE",
-                functions = "NONE",
-                keywords = "NONE",
-                numbers = "NONE",
-                operators = "NONE",
-                preprocs = "NONE",
-                strings = "NONE",
-                types = "NONE",
-                variables = "NONE",
+    "marko-cerovac/material.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+        vim.g.material_style = "darker"
+        require("material").setup({
+            contrast = {
+                terminal = true,
+                sidebars = true,
+                floating_windows = true,
+                cursor_line = true,
             },
-        },
-    },
-    priority = 1000
+            styles = {
+                comments = {},
+                strings = {},
+                keywords = {},
+                functions = {},
+                variables = {},
+                operators = {},
+                types = {},
+            },
+            plugins = {
+                "dap",
+                "neo-tree",
+                "telescope",
+                "mini",
+            },
+            disable = {
+                colored_cursor = false,
+                borders = false,
+                background = false,
+                term_colors = false,
+                eob_lines = false,
+            },
+        })
+    end,
 }
 
 local plugin_undotree = "mbbill/undotree"
@@ -159,7 +173,8 @@ require('mini.completion').setup({})
 
 -- Setting up colorscheme
 -- Themes hardcode italics on groups their `styles` config cannot reach
--- (nightfox: @markup.raw, @tag.attribute, NeoTreeGitConflict, MiniStarterFooter),
+-- (nightfox: @markup.raw, @tag.attribute, NeoTreeGitConflict, MiniStarterFooter;
+-- material: comments, @tag.attribute, diagnostic virtual text),
 -- so strip the attribute from every group after the colorscheme loads
 vim.api.nvim_create_autocmd("ColorScheme", {
     group = vim.api.nvim_create_augroup("NoItalics", { clear = true }),
@@ -175,6 +190,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     end,
 })
 
-vim.cmd.colorscheme("carbonfox")
+vim.cmd.colorscheme("material")
 vim.cmd.set("number relativenumber")
 
