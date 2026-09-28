@@ -25,12 +25,10 @@ vim.lsp.config('clangd', {
     root_markers = { ".clangd", ".clang-tidy", ".clang-format", "compile_commands.json", "compile_flags.txt", "configure.ac", ".git" }
 })
 
-vim.lsp.config('ts_ls', {
-    cmd = { "typescript-language-server", "--stdio" },
+vim.lsp.config('tsc', {
+    cmd = { "tsc", "--lsp", "--stdio" },
     filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-    init_options = {
-        hostInfo = "neovim"
-    }
+    root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
 })
 
 vim.lsp.config('rust_analyzer', {
@@ -137,7 +135,7 @@ vim.lsp.config('jdtls', {
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 vim.lsp.enable({
-    'ts_ls',
+    'tsc',
     'rust_analyzer',
     'clangd',
     'bashls',
